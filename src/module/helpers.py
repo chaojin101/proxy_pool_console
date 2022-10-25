@@ -19,7 +19,7 @@ def update(remote_port: str, index: int):
     global_vals.index[remote_port] = index
 
     # Keep memory usage in a limited range
-    if len(index) > 100:
+    if len(global_vals.index) > 100:
         port = global_vals.port_order.pop()
         del index[port]
 

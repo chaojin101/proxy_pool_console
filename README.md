@@ -34,8 +34,31 @@ docker run --name proxy_pool_console -p 7891:7891 -d proxy_pool_console:1.0
 
 ```
 
-## API
+## Usage
 
-### GET /proxy
+**GET /proxy**
 
-### GET /status
+:return str
+
+return a useful proxy "ip:port"
+
+if none useful proxy, it will return "None of one proxy ip works"
+
+**GET /status**
+
+:return json format str
+
+"active": active ip's amount
+"fail_ip": all failed ip with error message
+"total": total register proxy ip
+
+example:
+
+{
+    "Active": 4,
+    "Fail_IP": [{
+        "error message": "Timeout",
+        "ip": "55.55.55.55:7890"
+    }],
+    "total": 5
+}
