@@ -49,11 +49,14 @@ if none useful proxy, it will return "None of one proxy ip works"
 :return json format str
 
 "active": active ip's amount
+
 "fail_ip": all failed ip with error message
+
 "total": total register proxy ip
 
 example:
 
+```json
 {
     "Active": 4,
     "Fail_IP": [{
@@ -62,3 +65,4 @@ example:
     }],
     "total": 5
 }
+```
