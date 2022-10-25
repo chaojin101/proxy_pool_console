@@ -58,8 +58,8 @@ example:
 
 ```json
 {
-    "Active": 4,
-    "Fail_IP": [{
+    "active": 4,
+    "fail_ip": [{
         "error message": "Timeout",
         "ip": "55.55.55.55:7890"
     }],
