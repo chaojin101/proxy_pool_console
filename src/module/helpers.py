@@ -1,5 +1,6 @@
-
 import requests
+
+from module import utils
 
 from . import global_vals
 
@@ -36,14 +37,28 @@ def check_proxy_pool():
         try: 
             r = requests.get(url, proxies=proxies)
             return_ip = r.json()['origin']
-
-            print(f'return_ip: {return_ip}')
-
             ip = ip.split(':')[0] # strip port
             if ip == return_ip:
                 continue
             raise(f'{ip} is different from {return_ip}')
         except Exception as e:
             global_vals.proxy_pool.remove(ip)
-            global_vals.failed_proxy_ips.append([ip, str(e)])
-            print(e)
+            global_vals.failed_proxy_ips.append([ip, str(e), utils.current_time()])
+    
+    for ip in global_vals.failed_proxy_ips:
+        proxies = {
+            'http': ip,
+            'https': ip
+        }
+        url = 'https://httpbin.org/ip'
+        try: 
+            r = requests.get(url, proxies=proxies)
+            return_ip = r.json()['origin']
+            ip = ip.split(':')[0] # strip port
+            if ip == return_ip:
+                global_vals.proxy_pool.append(ip)
+                continue
+            raise(f'{ip} is different from {return_ip}')
+        except Exception as e:
+            #TODO: Modify error message and check time
+            pass

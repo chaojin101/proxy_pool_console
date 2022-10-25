@@ -37,11 +37,11 @@ def status():
         'active': len(global_vals.proxy_pool),
         'fail_ip': []
     }
-    print(global_vals.failed_proxy_ips)
-    for ip, error_message in global_vals.failed_proxy_ips:
+    for ip, error_message, t in global_vals.failed_proxy_ips:
         status['fail_ip'].append({
             'ip': ip,
-            'error_message': error_message
+            'error_message': error_message,
+            'test_time': t
         })
     return status
 
