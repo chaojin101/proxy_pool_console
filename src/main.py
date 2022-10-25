@@ -17,7 +17,7 @@ def init():
 
 def main():
     init()
-    app.run(debug=False)
+    app.run(debug=False, host=os.getenv('HOST'), port=os.getenv('PORT'))
 
 if __name__=='__main__':
     main()
