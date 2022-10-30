@@ -1,30 +1,37 @@
-import random
+import uuid
 
 from flask import Flask, request
 
-from . import helpers, utils, global_vals
-
+from . import global_vals
 
 app = Flask(__name__)
 
 @app.route("/proxy", methods=['get'])
 def proxy():
     """
-    Return a proxy ip
+    Return a proxy ip if there is a useful proxy in proxy pool else empty string.
+    
+    withour token return a random useful proxy
     """
-    # the port of request
-    remote_port = request.environ.get('REMOTE_PORT')
+    token = request.args.get('token')
+    if token is None:
+        return global_vals.proxy_pool.random()
 
-    # get PROXY_POOL index by remote_port, if not index, generate a random index
-    if len(global_vals.proxy_pool) == 0:
-        return "None of one proxy ip works"
-    index = global_vals.index.get(remote_port, random.randint(0, len(global_vals.proxy_pool)-1))
-    index = (index + 1) % len(global_vals.proxy_pool)
+    index = global_vals.token_pool.lookup(token)
+    if index is None:
+        return "invalid token"
 
-    helpers.update(remote_port, index)
+    return global_vals.proxy_pool.index(index)
 
-    return global_vals.proxy_pool[index]
 
+@app.route("/token", methods=['get'])
+def token():
+    """
+    Return a token, used to request /proxy?token={token}
+    """
+    token = uuid.uuid4().hex
+    global_vals.token_pool.sign(token)
+    return token
 
 
 @app.route('/status', methods=['get'])
@@ -32,17 +39,10 @@ def status():
     """
     Return the proxy pool status
     """
-    status = {
-        'total': len(global_vals.proxy_pool) + len(global_vals.failed_proxy_ips),
-        'active': len(global_vals.proxy_pool),
-        'fail_ip': []
+    return {
+        'total': global_vals.proxy_pool.amount,
+        'active': global_vals.proxy_pool.useful_amount,
+        'fail_ips': global_vals.proxy_pool.failed_proxies_info
     }
-    for ip, error_message, t in global_vals.failed_proxy_ips:
-        status['fail_ip'].append({
-            'ip': ip,
-            'error_message': error_message,
-            'test_time': t
-        })
-    return status
 
 

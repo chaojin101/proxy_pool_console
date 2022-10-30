@@ -12,7 +12,8 @@ def set_interval(f: FunctionType, args: List, interval: int):
             f(*args)
             time.sleep(interval)
     # start a thread to execute helper function
-    Thread(target=helper, args=tuple(args)).start()
+    t = Thread(target=helper, args=tuple(args))
+    t.start()
 
 def current_time():
     return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())

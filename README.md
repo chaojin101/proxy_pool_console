@@ -36,27 +36,38 @@ docker run --name proxy_pool_console -p 7891:7891 -d proxy_pool_console:1.0
 
 ## Usage
 
+**GET /proxy**
+return: string
+
+return a random useful proxy "ip:port" if proxy pool has useful proxies else empty string.
+
+example:
+
+```json
+55.55.55.55:7890
+```
+
 **GET /token**
 
-:return str
+:return string
 
-return a token, used to request /proxy
+return a token, used to request /proxy?token={token}
 
-**GET /proxy?uuid={uuid}**
+**GET /proxy?token={token}**
 
-:return str
+:return string
 
-return a useful proxy "ip:port"
+return a random useful proxy "ip:port" if proxy pool has useful proxies else empty string.
 
-if none useful proxy, it will return "None of one proxy ip works"
+it will use token to return useful proxy evenly.
 
 **GET /status**
 
-:return json format str
+:return json format string
 
 "active": active ip's amount
 
-"fail_ip": all failed ip with error message
+"fail_ips": all failed ip with error message
 
 "total": total register proxy ip
 
@@ -65,9 +76,10 @@ example:
 ```json
 {
     "active": 4,
-    "fail_ip": [{
+    "fail_ips": [{
         "error message": "Timeout",
-        "ip": "55.55.55.55:7890"
+        "ip": "55.55.55.55:7890",
+        "test_time": "2022-10-30 00:00:00"
     }],
     "total": 5
 }

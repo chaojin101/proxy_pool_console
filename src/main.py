@@ -4,7 +4,9 @@ import json
 import dotenv
 
 from module.routes import app
-from module import utils, helpers, global_vals
+from module import global_vals
+from module.proxy_pool import ProxyPool
+from module.token_pool import TokenPool
 
 def init():
     """
@@ -12,8 +14,10 @@ def init():
     """
     dotenv.load_dotenv()
     proxy_pool_str = os.getenv('PROXY_POOL')
-    global_vals.proxy_pool = json.loads(proxy_pool_str)
-    utils.set_interval(helpers.check_proxy_pool, [], 10)
+    proxy_pool_lst = json.loads(proxy_pool_str)
+    global_vals.proxy_pool = ProxyPool(proxy_pool_lst)
+    global_vals.token_pool = TokenPool(global_vals.proxy_pool)
+    # utils.set_interval(global_vals.proxy_pool.check, [], 100)
 
 def main():
     init()
