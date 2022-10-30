@@ -42,7 +42,7 @@ def status():
     return {
         'total': global_vals.proxy_pool.amount,
         'active': global_vals.proxy_pool.useful_amount,
-        'fail_ips': global_vals.proxy_pool.failed_proxies_info
+        'fail_proxies': global_vals.proxy_pool.failed_proxies_info
     }
 
 
