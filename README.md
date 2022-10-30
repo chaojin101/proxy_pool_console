@@ -36,7 +36,13 @@ docker run --name proxy_pool_console -p 7891:7891 -d proxy_pool_console:1.0
 
 ## Usage
 
-**GET /proxy**
+**GET /token**
+
+:return str
+
+return a token, used to request /proxy
+
+**GET /proxy?uuid={uuid}**
 
 :return str
 

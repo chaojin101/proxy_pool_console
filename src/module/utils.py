@@ -3,7 +3,7 @@ from types import FunctionType
 from typing import List
 import time
 
-def setInterval(f: FunctionType, args: List, interval: int):
+def set_interval(f: FunctionType, args: List, interval: int):
     """
     Execute function f with args in every interval seconds
     """
