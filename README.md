@@ -40,11 +40,17 @@ docker run --name proxy_pool_console -p 7891:7891 -d proxy_pool_console:1.0
 
 **GET /proxy**
 
+request example:
+
+```sh
+http://localhost:7891/proxy
+```
+
 return: string
 
 return a random useful proxy "ip:port" if proxy pool has useful proxies else empty string.
 
-example:
+response example:
 
 ```sh
 55.55.55.55:7890
@@ -52,11 +58,29 @@ example:
 
 **GET /token**
 
+request example:
+
+```sh
+http://localhost:7891/token
+```
+
 :return string
 
 return a token, used to request /proxy?token={token}
 
+response example:
+
+```sh
+hg9qhuh89oq4hf4iehoqh4
+```
+
 **GET /proxy?token={token}**
+
+request example:
+
+```
+http://localhost:7891/proxy?token={token}
+```
 
 :return string
 
@@ -64,7 +88,19 @@ return a random useful proxy "ip:port" if proxy pool has useful proxies else emp
 
 it will use token to return useful proxies evenly.
 
+response example:
+
+```
+55.55.55.55:7890
+```
+
 **GET /status**
+
+request example:
+
+```
+http://localhost:7891/status
+```
 
 :return json format string
 
@@ -74,7 +110,7 @@ it will use token to return useful proxies evenly.
 
 "total": total register proxy ip
 
-example:
+response example:
 
 ```json
 {
