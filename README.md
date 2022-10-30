@@ -38,7 +38,7 @@ docker run --name proxy_pool_console -p 7891:7891 -d proxy_pool_console:1.0
 
 ### REST API
 
-**GET /proxy**
+#### **GET /proxy**
 
 request example:
 
@@ -56,7 +56,7 @@ response example:
 55.55.55.55:7890
 ```
 
-**GET /token**
+#### **GET /token**
 
 request example:
 
@@ -74,7 +74,7 @@ response example:
 hg9qhuh89oq4hf4iehoqh4
 ```
 
-**GET /proxy?token={token}**
+#### **GET /proxy?token={token}**
 
 request example:
 
@@ -94,7 +94,7 @@ response example:
 55.55.55.55:7890
 ```
 
-**GET /status**
+#### **GET /status**
 
 request example:
 
