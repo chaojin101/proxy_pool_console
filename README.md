@@ -36,6 +36,8 @@ docker run --name proxy_pool_console -p 7891:7891 -d proxy_pool_console:1.0
 
 ## Usage
 
+### REST API
+
 **GET /proxy**
 
 return: string
